@@ -1,0 +1,137 @@
+body{
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 30px;
+    
+    color: #222;
+    font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.625;
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p {
+    margin-bottom: 24px;
+    padding: 0;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+    /* The bottom margin is small. It's designed to be used with gray meta text
+     * below a post title. */
+    margin: 24px 0 6px;
+}
+h3 {
+    font-size: 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+a {
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+    color: #ff6600;
+}
+a:visited {
+    color: #0099ff;
+}
+ul, ol {
+    padding: 0;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+}
+pre {
+    padding: 0px 24px;
+    white-space: pre-wrap;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+}
+aside {
+    display: block;
+    float: right;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+}
+hr {
+    width: 540px;
+    text-align: center;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+/* Positioning and element styling */
+
+.news {
+  border-bottom: 1px solid #BBB;
+  margin: 0 0 1em;
+  padding: 0 0 1em;
+}
+
+  .news a:visited {
+    color: purple;
+  }
+
+.last-news {
+  margin-bottom: 0px !important;
+  border-bottom: none !important;
+}
+
+.header h3 {
+font-size: 26px;
+font-weight: bold;
+line-height: 1.4em;
+text-shadow:1px 2px 0 #FFF;
+
+margin-bottom: 0;
+}
+
+.header .info {
+color: #666;
+font-size: 12px;
+line-height: 18px;
+margin-bottom: 5px;
+}
+
+.pagelist {
+text-align: right;
+}
