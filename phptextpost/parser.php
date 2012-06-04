@@ -1,7 +1,7 @@
 <?php
 /*
-PHPTextNews 1.0
-Working	in PHP5 or later
+PHPTextPost 1.1
+by Christophe Marois
 */
 
 /* 			General configuration 								        */
@@ -11,7 +11,7 @@ setlocale(LC_ALL, 'en_US.UTF-8');     // Date locale for time translation. By de
 $use_markdown = true; 					      // If set to true, title, author and content of news will be formatted by phpmarkdown
 
 $pagination = 5;		                  // Number of posts before page splitting
-$pagelisting = true; 	                // True will show page list at the end. False will enable infinite AJAX loading of posts.
+$pagelisting = true; 	                // True will show page list at the end. False will enable infinite AJAX loading of posts (not yet implemented).
 
 $lang['prev'] = "Previous";
 $lang['next'] = "Next";
@@ -20,6 +20,9 @@ $lang['last'] = "Last";
 $lang['navbutton'] = "Go";
 
 /* 			Do not edit now (unless, you know.) 	  			*/
+
+if(preg_match("/".basename(__FILE__)."/i",$_SERVER['REQUEST_URI']))
+  die('This file cannot be accessed directly, it must be included. See README.md');
 
 if($use_markdown) include_once('markdown.php');
 
@@ -30,7 +33,9 @@ if(!isset($directory))
 
 
 $files = glob($directory . "*.txt");	// List all files in directory
-$i = 0;
+
+if(count($files) == 0)
+  die('Welcome to phptextpost! Please read the readme to add your first news!</body></html>');
 
 function select_in_array($array, $beginning=0, $ending=0){
 	$new_array = array();
@@ -45,7 +50,7 @@ function select_in_array($array, $beginning=0, $ending=0){
 	return $new_array;
 }
 
-foreach($files as $file) { 				// Loop through files
+foreach($files as $i => $file) { 				// Loop through files
 	$content = file_get_contents($file);
 	$lines = preg_split("/((\r?\n)|(\n?\r))/", $content); // Split the file in lines. Regexp has cross-encoding capabilities
 
@@ -59,18 +64,13 @@ foreach($files as $file) { 				// Loop through files
 	if($use_markdown){					// Apply Markdown
 		$infos[$i]['content'] = Markdown($infos[$i]['content']);
 	}
-	
-	$i++;
 }
-
 
 function datesort($a, $b) { 			// Usort template for ording $infos array by ['date'] index
    return(strtotime($b['date']) - strtotime($a['date'])); 
 }
 usort($infos,'datesort'); 				// Sort using datesort template
-
 $ordered = array_reverse($infos);		// Reverse order for descending order
-
 
 // PAGE MANAGEMENT
 
@@ -92,7 +92,7 @@ if(isset($infos[$first_post-1])){
 	}
 	
 }else{
-	die("Not enough posts to show page");
+	die("Not enough posts to show page</body></html>");
 }
 
 $posts_on_page = $last_post-($currentpage-1)*$pagination; // Number of posts on page, not in index format

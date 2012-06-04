@@ -13,8 +13,8 @@
 
   <?php
   
-  $directory = 'phptextpost/files/'; // Directory which will contain the news, with trailing slash
-  include('phptextpost/parser.php');
+  $directory = '../files/'; // Directory which will contain the news, with trailing slash
+  include('../parser.php');
   
   ?>
 

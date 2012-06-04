@@ -1,4 +1,4 @@
-# PHPTextPosts 1.0
+# PHPTextPost 1.0
 
 ### Requirements
 
