@@ -2,14 +2,16 @@
 
 /* 			General configuration 								        */
 
-$originaldir =  'files/images';	                // Original files directory without trailing slash, relative to this file
-$thumbdir =     'files/images/thumbs';	        // Thumbnails directory without trailing slash, relative to this file
+$originaldir =  '../images';	                // Original files directory without trailing slash, relative to this file
+$thumbdir =     '../images/thumbs';	        // Thumbnails directory without trailing slash, relative to this file
 
 $allowed_types = array('jpg','jpeg','gif','png');	// Allowed images types, case-insensitive. Please only put jpg, jpeg, gif or png.
 
-$sizeinfo['small'] = array(150,150);            // Default small size
-$sizeinfo['medium'] = array(300,300);           // Default medium size
-$sizeinfo['large'] = array(500,500);            // Default large size
+$sizeinfo = array(
+  'small' => array(150,150),                    // Default small size
+  'medium' => array(300,300),                   // Default medium size
+  'large' => array(500,500)                     // Default large size
+);
 
 /* 			Do not edit now			              		        */
 
@@ -31,15 +33,13 @@ function output_image($fn){
 
 if(!isset($_GET['size'])  || empty($_GET['size']) || !isset($_GET['filename'])  || empty($_GET['filename']))
   die('You must specify a filename and a size');
-  
-  echo ($_GET['size'] . ' ' . $_GET['filename']); exit;
 
 $file = pathinfo($_GET['filename']);
 
 if(!array_key_exists($_GET['size'], $sizeinfo))
   die('The specified size is invalid');
   
-$size = $sizeinfo[$_GET['size']];
+$size = $_GET['size'];
 
 if(!file_exists($originaldir.'/'.$file['basename']))
   die('The required file does not exist');
@@ -47,19 +47,21 @@ if(!file_exists($originaldir.'/'.$file['basename']))
 if(!in_array($file['extension'], $allowed_types))
   die('The provided file type is not supported');
 
-if(!file_exists($thumbdir.'/'.$file['filename'].'.jpg')){ // Create thumbnail if it doesn't exist;
+if(!file_exists($thumbdir.'/'.$file['filename'].'-'.$size.'.jpg')){ // Create thumbnail if it doesn't exist;
   
   require_once 'phpthumb/ThumbLib.inc.php';       // PHPThumb lib, relative to this file
   
-  $thumb = PhpThumbFactory::create($originaldir.'/'.$file['basename']);
-  $thumb->adaptiveResize($size[0], $size[1]);
-  $thumb->save($thumbdir.'/'.$file['filename'].'.jpg');
-  $thumb->show();
+  try {
+    $thumb = PhpThumbFactory::create($originaldir.'/'.$file['basename']);
+  } catch (Exception $e) {
+    echo('Error with PhpThumbFactory: '.$e); exit;
+  }
   
-}else{ // Otherwise, show it.
-  
-  output_image($thumbdir.'/'.$file['filename'].'.jpg');
+  $thumb->adaptiveResize($sizeinfo[$size][0], $sizeinfo[$size][1]);
+  $thumb->save($thumbdir.'/'.$file['filename'].'-'.$size.'.jpg');
   
 }
+
+output_image($thumbdir.'/'.$file['filename'].'-'.$size.'.jpg'); // Then show it.
 
 ?>
