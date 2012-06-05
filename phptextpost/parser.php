@@ -1,6 +1,6 @@
 <?php
 /*
-PHPTextPost 1.0
+PHPTextPost 1.1
 by Christophe Marois
 */
 
