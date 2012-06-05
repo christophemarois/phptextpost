@@ -1,7 +1,7 @@
 # PHPTextPost 1.1
 ### Description
 
-PHPTextPost is a lightweight, database-less and highly customizable posting system that can be used as a blog or news roll. It features:
+PHPTextPost is a lightweight, database-less and highly customizable news system that can also act as a blogroll. It features:
 
 * Automatic thumbnail creation
 * Integrated markdown formating
@@ -10,7 +10,7 @@ PHPTextPost is a lightweight, database-less and highly customizable posting syst
 
 ### Requirements
 
-PHP > 5.3 and GD 2.0+
+PHP > 5 and GD 2.0+
 
 ### Installation
 
@@ -60,7 +60,8 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	Original: images/dog.jpg
 	Markdown: [![Dog](thumbs/dog-large.jpg)](images/dog.jpg)
 
-Known limitation: after adding a new image, the thumbnail will only be visible on the second page load. So refresh two times after adding one!
+**Known limitation:** after adding a new image, the thumbnail will only be visible on the second page load; this is because of the headers sent by the thumbnailer script while creating a thumbnail.  
+**So refresh two times after adding a thumbnail!**
 
 ### Configuration
 
