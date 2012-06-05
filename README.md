@@ -14,16 +14,15 @@ PHP > 5 and GD 2.0+
 
 ### Installation
 
-In the file in which you wish to include PHPTextPost, define `$directory` to point to the directory containing the posts (with trailing slash), then include `parser.php`
+For an out-of-the-box installation, include `parser.php` in a file contained in the same directory that holds `files/`, `images` and `phptextpost`.
 
-###### Example
+###### Example: index.php
 
 	<?php
-	  $directory = 'phptextnews/news/';
-	  include('phptextnews/parser.php');
+	  include('phptextpost/parser.php');
 	?>
 
-You may have to specify your script directory in the .htaccess for the thumbnails to work:
+You may have to specify your script directory in the .htaccess for the url rewriting to work properly:
 
 ###### Example
 
@@ -85,5 +84,5 @@ v.1.0
 
 	Scroll autoload
 	Thumbnails custom size
-	Permalinks for pages and posts
+	URL rewriting for pages and posts
 	Full post view
