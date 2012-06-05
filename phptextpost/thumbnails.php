@@ -16,7 +16,7 @@ $sizeinfo = array(
 
 /* 			Do not edit now			              		        */
 
-function output_image($fn){
+function output_image($fn, $mime = 'image/jpeg'){
   // Getting headers sent by the client.
   $headers = apache_request_headers(); 
   // Checking if the client is validating his cache and if it is current.
@@ -27,7 +27,7 @@ function output_image($fn){
       // Image not cached or cache outdated, we respond '200 OK' and output the image.
       header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($fn)).' GMT', true, 200);
       header('Content-Length: '.filesize($fn));
-      header('Content-Type: image/jpeg');
+      header('Content-Type: ' . $mime);
       print file_get_contents($fn);
   }
 }
@@ -71,6 +71,8 @@ if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'
 
   if(!file_exists($thumbpath)){ // Create thumbnail if it doesn't exist;
   
+    ob_start(); // Start ob to prevent header problems when showing
+    
     require_once $phpthumbfactory;
   
     try {
@@ -82,6 +84,10 @@ if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'
     $thumb->adaptiveResize($finalsize['width'], $finalsize['height']);
     $thumb->save($thumbpath);
 
+    ob_end_clean(); // Clean headers sent by PHPThumbFactory
+    
+    output_image($thumbpath);
+    
   } else {
   
     output_image($thumbpath); // Show the thumbnail

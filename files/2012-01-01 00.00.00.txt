@@ -2,4 +2,4 @@ This is a sample post!
 Read the README to know how to make more, and delete this one!  
 This is a markdown tag that uses thumbnail generation:
 
-[![Thom and Jonsi](thumbs/example-medium.jpg)](images/example.jpg)
+[![Thom and Jonsi](thumbs/example-400x200.jpg)](images/example.jpg)

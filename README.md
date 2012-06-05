@@ -59,9 +59,6 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	Original: images/dog.jpg
 	Markdown: [![Dog](thumbs/dog-large.jpg)](images/dog.jpg)
 
-**Known limitation:** after adding a new image, the thumbnail will only be visible on the second page load; this is because of the headers sent by the thumbnailer script while creating a thumbnail.  
-**So refresh two times after adding a thumbnail!**
-
 ### Configuration
 
 In `parser.php`, you can edit the following variables:
