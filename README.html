@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    margin: 10px 13px 10px 13px;
+}
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title>PHPTextPost 1.1</title>
+</head>
+<body>
+<h1>PHPTextPost 1.1</h1>
+
+<h3>Description</h3>
+
+<p>PHPTextPost is a lightweight, database-less and highly customizable posting system that can be used as a blog or news roll. It features:</p>
+
+<ul>
+<li>Automatic thumbnail creation</li>
+<li>Integrated markdown formating</li>
+<li>Page listing or optional scroll auto-loading</li>
+<li>Permalinks for pages and posts</li>
+</ul>
+
+
+<h3>Requirements</h3>
+
+<p>PHP > 5.3 and GD 2.0+</p>
+
+<h3>Installation</h3>
+
+<p>In the file in which you wish to include PHPTextPost, define <code>$directory</code> to point to the directory containing the posts (with trailing slash), then include <code>parser.php</code></p>
+
+<h6>Example</h6>
+
+<pre><code>&lt;?php
+  $directory = 'phptextnews/news/';
+  include('phptextnews/parser.php');
+?&gt;
+</code></pre>
+
+<p>You may have to specify your script directory in the .htaccess for the thumbnails to work:</p>
+
+<h6>Example</h6>
+
+<pre><code>RewriteBase /news/
+</code></pre>
+
+<h3>Adding posts</h3>
+
+<ul>
+<li>Put each post in a different <strong>.txt</strong> file.</li>
+<li>Filenames must be formatted in this format: <code>YYYY-MM-DD HH.MM.SS.txt</code>. For example: <code>2012-02-17 00.00.00.txt</code>.</li>
+<li>The first line of each file is considered as being the title, and the rest is considered as content. Content will be markdown-formatted.</li>
+</ul>
+
+
+<p>In the file, the first line will be considered as being the title, and the rest will be the content. By default, the content is markdown-formatted.</p>
+
+<h3>Adding images</h3>
+
+<p>PHPTextPost features an automatic thumbnail generating feature. To use it, you must put your original images in the <code>images/</code> directory, then embed an image which points to: <code>thumbs/[filename]-[size].[ext]</code>, where <strong>filename</strong> is the original filename minus the extension, <strong>size</strong> the desired thumbnail size, and <strong>ext</strong> the original filename&rsquo;s extension.</p>
+
+<p>There are three thumbnail size presets in the code, <code>small</code>, <code>medium</code> and <code>large</code>, but you can add your own presets in <code>phptextpost/thumbnails.php</code>. You can also specify your own size in <code>400x300</code>form (not yet implemented).</p>
+
+<p>Note that if the original image&rsquo;s size is greater than the asked thumbnail size, the original file will be displayed instead, and no file will be created.</p>
+
+<h6>Example of image thumbnailing with preset:</h6>
+
+<pre><code>Original: images/dog.jpg
+Markdown: ![Dog](thumbs/dog-medium.jpg)
+</code></pre>
+
+<h6>Example of image thumbnailing without preset:</h6>
+
+<pre><code>Original: images/dog.jpg
+Markdown: ![Dog](thumbs/dog-200x150.jpg)
+</code></pre>
+
+<h6>Example of image thumbnailing with link to the original:</h6>
+
+<pre><code>Original: images/dog.jpg
+Markdown: [![Dog](thumbs/dog-large.jpg)](images/dog.jpg)
+</code></pre>
+
+<p>Known limitation: after adding a new image, the thumbnail will only be visible on the second page load. So refresh two times after adding one!</p>
+
+<h3>Configuration</h3>
+
+<p>In <code>parser.php</code>, you can edit the following variables:</p>
+
+<h3>Changelog</h3>
+
+<p>v.1.1 (current)</p>
+
+<pre><code>Bug fixes:
+    Thumbnails first-time generation header problem
+    Pagelist when only one page
+No thumbnail creation when original is of smaller size
+Fixed htaccess
+</code></pre>
+
+<p>v.1.0</p>
+
+<pre><code>Initial release
+</code></pre>
+
+<h3>Planned features</h3>
+
+<pre><code>Scroll autoload
+Thumbnails custom size
+Permalinks for pages and posts
+Full post view
+</code></pre>
+</body>
+</html>

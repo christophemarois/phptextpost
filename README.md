@@ -1,12 +1,20 @@
-# PHPTextPost 1.0
+# PHPTextPost 1.1
+### Description
+
+PHPTextPost is a lightweight, database-less and highly customizable posting system that can be used as a blog or news roll. It features:
+
+* Automatic thumbnail creation
+* Integrated markdown formating
+* Page listing or optional scroll auto-loading
+* Permalinks for pages and posts
 
 ### Requirements
 
-* PHP5
+PHP > 5.3 and GD 2.0+
 
 ### Installation
 
-* In the file in which you wish to include PHPTextPost, define `$directory` to point to the directory containing the posts, with trailing slash, then include `parser.php`
+In the file in which you wish to include PHPTextPost, define `$directory` to point to the directory containing the posts (with trailing slash), then include `parser.php`
 
 ###### Example
 
@@ -14,6 +22,12 @@
 	  $directory = 'phptextnews/news/';
 	  include('phptextnews/parser.php');
 	?>
+
+You may have to specify your script directory in the .htaccess for the thumbnails to work:
+
+###### Example
+
+	RewriteBase /news/
 
 ### Adding posts
 
@@ -29,7 +43,7 @@ PHPTextPost features an automatic thumbnail generating feature. To use it, you m
 
 There are three thumbnail size presets in the code, `small`, `medium` and `large`, but you can add your own presets in `phptextpost/thumbnails.php`. You can also specify your own size in `400x300`form (not yet implemented).
 
-Note that if the original image's size is greater than the asked thumbnail size, the original file will be displayed instead, and no file will be created (not yet implemented).
+Note that if the original image's size is greater than the asked thumbnail size, the original file will be displayed instead, and no file will be created.
 
 ###### Example of image thumbnailing with preset:
 
@@ -45,22 +59,30 @@ Note that if the original image's size is greater than the asked thumbnail size,
 
 	Original: images/dog.jpg
 	Markdown: [![Dog](thumbs/dog-large.jpg)](images/dog.jpg)
-	  
+
+Known limitation: after adding a new image, the thumbnail will only be visible on the second page load. So refresh two times after adding one!
+
 ### Configuration
 
 In `parser.php`, you can edit the following variables:
 
 ### Changelog
 
-v.1.1
+v.1.1 (current)
 
-	Todo: 
-	Scroll autoload
-	Thumbnails custom size
-	Thumbnails first-time generation header problem
+	Bug fixes:
+		Thumbnails first-time generation header problem
+		Pagelist when only one page
 	No thumbnail creation when original is of smaller size
-	Unified configuration file
+	Fixed htaccess
 
 v.1.0
 
 	Initial release
+	
+### Planned features
+
+	Scroll autoload
+	Thumbnails custom size
+	Permalinks for pages and posts
+	Full post view

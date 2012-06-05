@@ -1,11 +1,15 @@
 <?php
 /*
-PHPTextPost 1.1
+PHPTextPost 1.0
 by Christophe Marois
 */
 
 /* 			General configuration 								        */
 
+if(!isset($directory))
+  $directory = 'files/';              // Directory which will contain the news, with trailing slash
+
+$ext = 'txt';                         // Posts file extension. 'txt' by default, could also be 'md' markdown.
 $dateformat = 'Posted on %B %e, %Y';  // Date formatted in php's strftime() format.
 setlocale(LC_ALL, 'en_US.UTF-8');     // Date locale for time translation. By default: 'en_US.UTF-8'
 $use_markdown = true; 					      // If set to true, title, author and content of news will be formatted by phpmarkdown
@@ -26,13 +30,10 @@ if(preg_match("/".basename(__FILE__)."/i",$_SERVER['REQUEST_URI']))
 
 if($use_markdown) include_once('markdown.php');
 
-if(!isset($directory))
-  $directory = 'files/';
-
 // LIST FILES, PARSE AND SORT
 
 
-$files = glob($directory . "*.txt");	// List all files in directory
+$files = glob($directory . "*." . $ext);	// List all files in directory
 
 if(count($files) == 0)
   die('Welcome to phptextpost! Please read the readme to add your first news!</body></html>');
@@ -105,42 +106,46 @@ $totalpagenumber = ceil(count($infos)/$pagination);
 function pagelist() {
 	
 	global $currentpage, $lang, $totalpagenumber;
+  
+  if($totalpagenumber > 1){
+  
+  	echo('<div class="pagelist">'); echo("\n");
+  	echo('<form method="GET">'); echo("\n");
 
-	echo('<div class="pagelist">'); echo("\n");
-	echo('<form method="GET">'); echo("\n");
+  	if($currentpage != 1){ // Show First/Prev buttons
+  		$prev = $currentpage-1;
+  		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=1">' . $lang['first'] . "</a> ");
+  		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $prev . '">' . $lang['prev'] . "</a> ");
+  	}
 
-	if($currentpage != 1){ // Show First/Prev buttons
-		$prev = $currentpage-1;
-		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=1">' . $lang['first'] . "</a> ");
-		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $prev . '">' . $lang['prev'] . "</a> ");
-	}
-
-	echo('Page: <select name="p">');echo("\n");
+  	echo('Page: <select name="p">');echo("\n");
 	
-	for($i=0; $i < $totalpagenumber; $i++){
+  	for($i=0; $i < $totalpagenumber; $i++){
 
-		$page_number = $i+1;
-		if($page_number == $currentpage){
-			echo('<option value="' . $page_number . '" selected>' . $page_number . '</option>');
-		}else{
-			echo('<option value="' . $page_number . '">' . $page_number . '</option>');
-		}
+  		$page_number = $i+1;
+  		if($page_number == $currentpage){
+  			echo('<option value="' . $page_number . '" selected>' . $page_number . '</option>');
+  		}else{
+  			echo('<option value="' . $page_number . '">' . $page_number . '</option>');
+  		}
 
-	}
-	echo("\n"); // Only for HTML's sake
+  	}
+  	echo("\n"); // Only for HTML's sake
 
-	echo('</select>'); echo("\n");
-	echo('<input type="submit" value="' . $lang['navbutton'] . '" />'); echo("\n");
+  	echo('</select>'); echo("\n");
+  	echo('<input type="submit" value="' . $lang['navbutton'] . '" />'); echo("\n");
 
-	if($currentpage != $totalpagenumber){ // Show Next/Last buttons
-		$next = $currentpage+1;
-		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $next . '">' . $lang['next'] . "</a> ");
-		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $totalpagenumber . '">' . $lang['last'] . "</a> ");
-	}
+  	if($currentpage != $totalpagenumber){ // Show Next/Last buttons
+  		$next = $currentpage+1;
+  		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $next . '">' . $lang['next'] . "</a> ");
+  		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $totalpagenumber . '">' . $lang['last'] . "</a> ");
+  	}
 	
-	echo("\n");
-	echo('</form>'); echo("\n");
-	echo('</div>'); echo("\n");
+  	echo("\n");
+  	echo('</form>'); echo("\n");
+  	echo('</div>'); echo("\n");
+	
+	}
 
 }
 
