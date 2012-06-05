@@ -21,6 +21,7 @@ $lang['prev'] = "Previous";
 $lang['next'] = "Next";
 $lang['first'] = "First";
 $lang['last'] = "Last";
+$lang['page'] = "Page";
 $lang['navbutton'] = "Go";
 
 /* 			Do not edit now (unless, you know.) 	  			*/
@@ -118,7 +119,7 @@ function pagelist() {
   		echo('<a href="' . $_SERVER['PHP_SELF'] . '?p=' . $prev . '">' . $lang['prev'] . "</a> ");
   	}
 
-  	echo('Page: <select name="p">');echo("\n");
+  	echo($lang['page'] . ': <select name="p">');echo("\n");
 	
   	for($i=0; $i < $totalpagenumber; $i++){
 

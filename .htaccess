@@ -3,5 +3,5 @@ RewriteEngine on
 #Change this to the main directory, relative to www's root.
 RewriteBase /
 
-#Will rewrite thumbs/test-small.jpg to phptextpost/thumbnails.php?filename=test.jpg&size=original
+#Will rewrite thumbs/test-small.jpg to phptextpost/thumbnails.php?filename=test.jpg&size=small
 RewriteRule ^thumbs\/([a-zA-Z0-9_-]+)\-([a-zA-Z0-9]+)\.([a-zA-Z]+)$ phptextpost/thumbnails.php?filename=$1.$3&size=$2 [NE,QSA]

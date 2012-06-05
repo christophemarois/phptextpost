@@ -34,21 +34,40 @@ function output_image($fn){
 
 if(!isset($_GET['size'])  || empty($_GET['size']) || !isset($_GET['filename'])  || empty($_GET['filename']))
   die('You must specify a filename and a size');
-if(!array_key_exists($_GET['size'], $sizeinfo))
-  die('The specified size is invalid');
-  
+
 $file = pathinfo($_GET['filename']);
 $size = $_GET['size'];
 
+if(preg_match("/^([0-9]{1,4})x([0-9]{1,4})$/", $size)){ // If the size is not a preset
+  
+  preg_match("/^([0-9]{1,4})x([0-9]{1,4})$/", $size, $matches, PREG_OFFSET_CAPTURE);
+  
+  $finalsize['width'] = $matches[1][0];
+  $finalsize['height'] = $matches[2][0];
+  
+  if(($finalsize['width'] < 50) || ($finalsize['height'] < 50))
+    die('You must specify a size greater than 50x50');
+  
+}else{ // If the size is a preset
+  
+  if(!array_key_exists($_GET['size'], $sizeinfo))
+    die('The specified size is invalid');
+    
+  $finalsize['width'] = $sizeinfo[$size][0];
+  $finalsize['height'] = $sizeinfo[$size][1];
+  
+}
+  
 if(!file_exists($originaldir.'/'.$file['basename']))
   die('The required file does not exist');
+  
 if(!in_array($file['extension'], $allowed_types))
   die('The provided file type is not supported');
 
 $thumbpath = $thumbdir.'/'.$file['filename'].'-'.$size.'.jpg';
 $imagesize = getimagesize($originaldir.'/'.$file['basename']);
 
-if(($imagesize[0] > $sizeinfo[$size][0]) || ($imagesize[1] > $sizeinfo[$size][1])){ // Prevent resizing small images
+if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'])){ // Prevent resizing small images
 
   if(!file_exists($thumbpath)){ // Create thumbnail if it doesn't exist;
   
@@ -60,12 +79,12 @@ if(($imagesize[0] > $sizeinfo[$size][0]) || ($imagesize[1] > $sizeinfo[$size][1]
       echo('Error with PhpThumbFactory: '.$e); exit;
     }
   
-    $thumb->adaptiveResize($sizeinfo[$size][0], $sizeinfo[$size][1]);
+    $thumb->adaptiveResize($finalsize['width'], $finalsize['height']);
     $thumb->save($thumbpath);
 
   } else {
   
-    output_image($thumbpath); // Then show it.
+    output_image($thumbpath); // Show the thumbnail
   
   }
 
