@@ -28,6 +28,10 @@ You may have to specify your script directory in the .htaccess for the url rewri
 
 	RewriteBase /news/
 
+### Configuration
+
+There are several variables that can be changed in order to customize PHPTextPost in `parser.php` or `thumbnails.php`.
+
 ### Adding posts
 
 * Put each post in a different **.txt** file.
@@ -59,15 +63,12 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	Original: images/dog.jpg
 	Markdown: [![Dog](thumbs/dog-large.jpg)](images/dog.jpg)
 
-### Configuration
-
-In `parser.php`, you can edit the following variables:
-
 ### Changelog
 
 v.1.2 (current)
 
 	Added custom thumbnail sizes
+	Added php limits override for thumbnail class
 
 v.1.1
 
@@ -86,4 +87,4 @@ v.1.0
 	Scroll autoload
 	URL rewriting for pages and posts
 	Full post view
-	Protect thumbnail generator for exploitation
+	Add thumbnail upscaling to thumbnails.php
