@@ -99,6 +99,26 @@ hr {
     color: #999;
 }
 
+/* Clearfix */
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.clearfix {
+  /* display: inline-block; */
+}
+html[xmlns] .clearfix {
+  display: block;
+}
+* html .clearfix {
+  height: 1%;
+}
+
 /* Positioning and element styling */
 
 .news {
@@ -120,7 +140,7 @@ hr {
 font-size: 26px;
 font-weight: bold;
 line-height: 1.4em;
-text-shadow:1px 2px 0 #FFF;
+text-shadow:1px 1px 0 #FFF;
 
 margin-bottom: 0;
 }
@@ -130,6 +150,16 @@ color: #666;
 font-size: 12px;
 line-height: 18px;
 margin-bottom: 5px;
+}
+
+.imgleft {
+  margin: 0 20px 5px 0;
+  float: left;
+}
+
+.imgright {
+  margin: 0 0 5px 20px;
+  float: right;
 }
 
 .pagelist {

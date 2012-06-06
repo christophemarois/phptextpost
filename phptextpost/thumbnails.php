@@ -16,7 +16,7 @@ $sizeinfo = array('small'   => array(150,150),      // Default small size
 
 $toosmall = array('width' => 50, 'height' => 50);   // At which point an asked sized is considered too small.
 
-$phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations in order to process large image. false by default.
+$phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations.
 
 /* 			Do not edit now			              		        */
 

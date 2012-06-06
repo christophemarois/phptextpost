@@ -29,7 +29,7 @@ $lang['navbutton'] = "Go";
 if(preg_match("/".basename(__FILE__)."/i",$_SERVER['REQUEST_URI']))
   die('This file cannot be accessed directly, it must be included. See README.md');
 
-if($use_markdown) include_once('markdown.php');
+if($use_markdown) include_once('markdownextra.1.2.5.php');
 
 // LIST FILES, PARSE AND SORT
 
@@ -59,8 +59,8 @@ foreach($files as $i => $file) { 				// Loop through files
   $infos[$i]['title'] = $lines[0]; // Line 1 will be title
 	$infos[$i]['content'] = implode(select_in_array($lines,1)); // Lines 2 to end will be content, then, reassemble the array elements into a string.
 	
-	$infos[$i]['date'] = basename($file);
-	$infos[$i]['date'] = substr($infos[$i]['date'], 0, -4);
+	$infos[$i]['date'] = pathinfo($directory . $file);
+	$infos[$i]['date'] = $infos[$i]['date']['filename'];
 	$infos[$i]['date'] = str_replace('.',':',$infos[$i]['date']);
 	
 	if($use_markdown){					// Apply Markdown
@@ -160,7 +160,7 @@ for($i=0; $i <= ($posts_on_page-1); $i++) { // Loop as many times as the number 
 	// Begin news template
 	?>
 	
-	<div class="news<?php if($i == ($posts_on_page-1)) echo(' last-news'); ?>">
+	<div class="news<?php if($i == ($posts_on_page-1)) echo(' last-news'); ?> clearfix">
 		<div class="header">
 			<h3><?php echo($infos[$current_index]['title']); ?></h3> 
 			<div class="info">
