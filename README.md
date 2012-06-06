@@ -44,7 +44,7 @@ In the file, the first line will be considered as being the title, and the rest 
 
 PHPTextPost features an automatic thumbnail generating feature. To use it, you must put your original images in the `images/` directory, then embed an image which source os: `thumbs/[filename.ext]?[size]`, where **filename.ext** is the original filename and **size** the desired thumbnail size.
 
-There are three thumbnail size presets in the code, `small`, `medium` and `large`, but you can add your own presets in `phptextpost/thumbnails.php`. You can also directly specify a custom size in `400x300` form.
+There are three thumbnail size presets in the code, `small`, `medium` and `large`, but you can add your own presets in `phptextpost/thumbnails.php`.
 
 Note that if the original image's size is greater than the asked thumbnail size, the original file will be displayed instead, and no file will be created.
 
@@ -53,10 +53,17 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	Original: images/dog.jpg
 	Markdown: ![A dog](thumbs/dog.jpg?medium)
 
-###### Example of image thumbnailing without preset:
+###### Example of custom preset in thumbnails.php:
 
-	Original: images/dog.jpg
-	Markdown: ![A dog](thumbs/dog.jpg?200x150)
+	$sizeinfo = array(
+	  'small'   => array(150,150),                      // Default small size
+	  'medium'  => array(300,300),                      // Default medium size
+	  'large'   => array(500,500),                      // Default large size
+	  'custom1' => array(125,230),
+	  'custom2' => array(200,600),
+	);
+
+You can then call `thumbs/dog.jpg?custom1` and `thumbs/dog.jpg?custom2`.
 
 ###### Example of image thumbnailing with link to the original:
 
@@ -68,21 +75,22 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	Original: images/dog.jpg
 	HTML: <a href="images/dog.jpg" class="imgleft"><img src="thumbs/dog.jpg?small" alt="A dog"></a>
 
+Writing images in pure HTML allows you to assign a class to the link or the image, which Markdown does not allow. PHPTextPost's original CSS comes with two classes meant for link/images: `imgleft` and `imgright`.
+
 ### Changelog
 
 v.1.2 (current)
 
-	Added custom thumbnail sizes
+	Removed custom thumbnail sizes for security issues
 	Added php limits override option in thumbnails.php
 	Replaced PHP Markdown 1.0.1o by PHP Markdown Extra 1.2.5
-	Various bugfixes
 	Changed thumbnail syntax
+	Various bugfixes
 
 v.1.1
 
-	Bug fixes:
-		Thumbnails first-time generation header problem
-		Pagelist when only one page
+	Thumbnails first-time generation header problem
+	No more pagelist when only one page
 	No thumbnail creation when original is of smaller size
 	Fixed htaccess
 
@@ -92,9 +100,7 @@ v.1.0
 	
 ### To-do list
 
-	Scroll autoload
-	URL rewriting for pages and posts
-	Full post view
-	Add thumbnail upscaling to thumbnails.php
-	Protect thumbnails.php from exploitation by adding an option that checks a given post to see if it effectively contains the asked thumbnail before creating one
-	Dead thumbnails cleanup by crawling every file
+* Scroll autoload
+* URL rewriting for pages and posts
+* Full post view
+* Add thumbnail upscaling to thumbnails.php

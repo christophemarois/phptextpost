@@ -10,13 +10,14 @@ $allowed_types = array('jpg','jpeg','gif','png');	  // Allowed images types, cas
 $jpegquality = 70;                                  // Default thumbnail quality (thus filesize). 100 is best, 0 is worst.
 $resizeup = true;                                   // Whether the script should resize small images up to the asked size. false by default.
 
-$sizeinfo = array('small'   => array(150,150),      // Default small size
-                  'medium'  => array(300,300),      // Default medium size
-                  'large'   => array(500,500));     // Default large size
-
-$toosmall = array('width' => 50, 'height' => 50);   // At which point an asked sized is considered too small.
+$sizeinfo = array(
+  'small'   => array(150,150),                      // Default small size
+  'medium'  => array(300,300),                      // Default medium size
+  'large'   => array(500,500)                       // Default large size
+);
 
 $phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations.
+                                                    // Only try this if you have problems running your script on large images
 
 /* 			Do not edit now			              		        */
 
@@ -36,45 +37,33 @@ function output_image($fn, $mime = 'image/jpeg'){
   }
 }
 
+// Run security tests and set variables
+
 if(!isset($_GET['size'])  || empty($_GET['size']) || !isset($_GET['filename'])  || empty($_GET['filename']))
   die('You must specify a filename and a size');
 
 $file = pathinfo($_GET['filename']);
-$size = $_GET['size'];
-
-if(preg_match("/^([0-9]{1,4})x([0-9]{1,4})$/", $size)){ // If the size is not a preset
-  
-  preg_match("/^([0-9]{1,4})x([0-9]{1,4})$/", $size, $matches, PREG_OFFSET_CAPTURE);
-  
-  $finalsize['width'] = $matches[1][0];
-  $finalsize['height'] = $matches[2][0];
-  
-  if(($finalsize['width'] < $toosmall['width']) || ($finalsize['height'] < $toosmall['height']))
-    die("You must specify a size greater than " . $toosmall['width'] . " x " . $toosmall['height']);
-  
-}else{ // If the size is a preset
-  
-  if(!array_key_exists($_GET['size'], $sizeinfo))
-    die('The specified size is invalid');
-    
-  $finalsize['width'] = $sizeinfo[$size][0];
-  $finalsize['height'] = $sizeinfo[$size][1];
-  
-}
+$originalpath = $originaldir.'/'.$file['basename'];
   
 if(!file_exists($originaldir.'/'.$file['basename']))
   die('The required file does not exist');
-  
 if(!in_array($file['extension'], $allowed_types))
   die('The provided file type is not supported');
+if(!array_key_exists($_GET['size'], $sizeinfo))
+  die('The specified size is invalid');
 
-$originalpath = $originaldir.'/'.$file['basename'];
+$size = $_GET['size'];
+$finalsize['width'] = $sizeinfo[$size][0];
+$finalsize['height'] = $sizeinfo[$size][1];
+
 $thumbpath = $thumbdir.'/'.$file['filename'].'-'.$size.'.jpg';
 $imagesize = getimagesize($originalpath);
 
-if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'])){ // Prevent resizing small images
+// Resizing
 
-  if(!file_exists($thumbpath)){ // Create thumbnail if it doesn't exist;
+if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'])){ // It's a large enough image, resize it
+
+  if(!file_exists($thumbpath)){ // Create thumbnail if it doesn't already exist.
     
     if($phpoverride){
       @set_time_limit (0);
@@ -100,9 +89,9 @@ if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'
   
   output_image($thumbpath); // Show the thumbnail
 
-} else {
+} else { // The image is too small.
   
-  output_image($originalpath); // Show original image
+  output_image($originalpath); // Show the original
   
 }
 

@@ -1,5 +1,5 @@
 This is a sample post!
-<a href="images/example.jpg" class="imgleft"><img src="thumbs/example.jpg?150x180" alt="Thom and Jonsi"></a>
+<a href="images/example.jpg" class="imgleft"><img src="thumbs/example.jpg?small" alt="Thom and Jonsi"></a>
 This is a second example that uses a pure HTML image tag, in order to align it:
 ~~~~
 <a href="images/example.jpg" class="imgleft"><img src="thumbs/example.jpg?small" alt="Thom and Jonsi"></a>
