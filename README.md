@@ -1,7 +1,7 @@
 # PHPTextPost 1.2
 ### Description
 
-PHPTextPost is a lightweight, database-less and highly customizable news system that can also act as a blogroll. It features:
+PHPTextPost is a lightweight, file-based and highly customizable news system that can also act as a blogroll. It features:
 
 * Automatic thumbnail creation
 * Integrated markdown formating
@@ -79,7 +79,7 @@ Writing images in pure HTML allows you to assign a class to the link or the imag
 
 ### Changelog
 
-v.1.2 (current)
+v.1.2
 
 	Removed custom thumbnail sizes for security issues
 	Added php limits override option in thumbnails.php
