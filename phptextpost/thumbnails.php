@@ -13,7 +13,7 @@ $resizeup = true;                                   // Whether the script should
 $sizeinfo = array(
   'small'   => array(150,150),                      // Default small size
   'medium'  => array(300,300),                      // Default medium size
-  'large'   => array(500,500)                       // Default large size
+  'large'   => array(500,500),                       // Default large size
 );
 
 $phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations.
