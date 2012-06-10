@@ -68,7 +68,7 @@ You can then call `thumbs/dog.jpg?custom1` and `thumbs/dog.jpg?custom2`.
 ###### Example of image thumbnailing with link to the original:
 
 	Original: images/dog.jpg
-	Markdown: [![A dog](images/dog.jpg)](thumbs/dog.jpg?large)
+	Markdown: [![A dog](thumbs/dog.jpg)](images/dog?large.jpg)
 
 ###### Example of pure HTML embedding for CSS classing
 
