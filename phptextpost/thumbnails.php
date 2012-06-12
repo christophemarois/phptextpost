@@ -11,15 +11,36 @@ $jpegquality = 70;                                  // Default thumbnail quality
 $resizeup = true;                                   // Whether the script should resize small images up to the asked size. false by default.
 
 $sizeinfo = array(
-  'small'   => array(150,150),                      // Default small size
-  'medium'  => array(300,300),                      // Default medium size
-  'large'   => array(500,500)                       // Default large size
+  'small'   => array(150,150),
+  'medium'  => array(300,300),
+  'large'   => array(500,500),
+  'full'    => array(770,770) 
 );
 
 $phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations.
                                                     // Only try this if you have problems running your script on large images
 
 /* 			Do not edit now			              		        */
+
+if( !function_exists('apache_request_headers') ) {
+  function apache_request_headers() {
+    $arh = array();
+    $rx_http = '/\AHTTP_/';
+    foreach($_SERVER as $key => $val) {
+      if( preg_match($rx_http, $key) ) {
+        $arh_key = preg_replace($rx_http, '', $key);
+        $rx_matches = array();
+        $rx_matches = explode('_', $arh_key);
+        if( count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
+          foreach($rx_matches as $ak_key => $ak_val) $rx_matches[$ak_key] = ucfirst($ak_val);
+          $arh_key = implode('-', $rx_matches);
+        }
+        $arh[$arh_key] = $val;
+      }
+    }
+    return( $arh );
+  }
+}
 
 function output_image($fn, $mime = 'image/jpeg'){
   // Getting headers sent by the client.
