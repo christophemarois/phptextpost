@@ -1,4 +1,4 @@
-# PHPTextPost 1.2.1 (beta)
+# PHPTextPost 1.2.1
 ### Description
 
 PHPTextPost is a lightweight, file-based and highly customizable news system that can also act as a blogroll. It features:
