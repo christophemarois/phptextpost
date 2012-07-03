@@ -9,7 +9,7 @@ by Christophe Marois
 if(!isset($directory))
   $directory = 'files/';              // Directory which will contain the news, with trailing slash
 
-$ext = 'txt';                         // Posts' file extension. 'txt' by default, could also be 'md' markdown.
+$ext = 'md';                         // Posts' file extension. 'txt' by default, could also be 'md' markdown.
 $dateformat = 'Posted on %B %e, %Y';  // Date formatted in php's strftime() format.
 setlocale(LC_ALL, 'en_US.UTF-8');     // Date locale for time translation. By default: 'en_US.UTF-8'
 $use_markdown = true; 					      // If set to true, title, author and content of news will be formatted by phpmarkdown

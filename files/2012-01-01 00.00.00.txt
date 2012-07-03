@@ -1,5 +1,0 @@
-This is a sample post!
-Read the **README** to know how to make your own posts. When you have, delete this one!  
-This is a markdown tag that uses thumbnail generation:
-
-[![Thom and Jonsi](thumbs/example.jpg?medium)](images/example.jpg)

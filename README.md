@@ -3,8 +3,8 @@
 
 PHPTextPost is a lightweight, file-based and highly customizable news system that can also act as a blogroll. It features:
 
-* Automatic thumbnail creation
-* Integrated markdown formating
+* Automatic thumbnail system
+* Markdown formating
 * Page listing or optional scroll auto-loading
 * Permalinks for pages and posts
 
@@ -63,21 +63,32 @@ Note that if the original image's size is greater than the asked thumbnail size,
 	  'custom2' => array(200,600),
 	);
 
-You can then call `thumbs/dog.jpg?custom1` and `thumbs/dog.jpg?custom2`.
+You can then call `thumbs/dog.jpg?custom1` and `thumbs/dog.jpg?custom2`. Note that all pixel specification will always respect aspect ratio.
 
 ###### Example of image thumbnailing with link to the original:
 
 	Original: images/dog.jpg
-	Markdown: [![Da Vinci](thumbs/dog.jpg?small)](images/dog.jpg)
+	Markdown: [![A dog](thumbs/dog.jpg?small)](images/dog.jpg)
 
-###### Example of pure HTML embedding for CSS classing
+###### Image alignment
+
+PHPTextPost's original CSS comes with a trick meant for aligning images: you have to put `imgleft` and `imgright` as the **alt** of the image. The downsize of this method is the disrespect of valid HTML, and the unusability of the alt option:
 
 	Original: images/dog.jpg
-	HTML: <a href="images/dog.jpg" class="imgleft"><img src="thumbs/dog.jpg?small" alt="A dog"></a>
+	Markdown: [![imgleft](thumbs/dog.jpg?small)](images/dog.jpg)
 
-Writing images in pure HTML allows you to assign a class to the link or the image, which Markdown does not allow. PHPTextPost's original CSS comes with two classes meant for link/images: `imgleft` and `imgright`.
+If you don't want to use this shortcut, you can always use pure HTML, which is valid and provides an **alt**:
+
+	Original: images/dog.jpg
+	Markdown: <a href="images/dog.jpg" class="alignleft"><img src="thumbs/dog.jpg?small" alt="A dog" /></a>
 
 ### Changelog
+
+v.1.2.1
+
+	Changed the default post filetype to .md
+	Modified example template
+	Improved accuracy of markdown styling
 
 v.1.2
 
