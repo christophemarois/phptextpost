@@ -14,7 +14,7 @@ PHP > 5 and GD 2.0+
 
 ### Installation
 
-For an out-of-the-box installation, include `parser.php` in a file contained in the same directory that holds `files/`, `images/` and `phptextpost/`.
+For an new installation (not using the provided template), include `parser.php` in a file contained in the same directory that holds `files/`, `images/` and `phptextpost/`.
 
 ###### Example: index.php
 
@@ -34,8 +34,8 @@ There are several variables that can be changed in order to customize PHPTextPos
 
 ### Adding posts
 
-* Put each post in a different **.txt** file.
-* Filenames must be formatted in this format: `YYYY-MM-DD HH.MM.SS.txt`. For example: `2012-02-17 00.00.00.txt`.
+* Put each post in a different **.md** file.
+* Filenames must be formatted in this format: `YYYY-MM-DD HH.MM.SS.md`. For example: `2012-02-17 00.00.00.md`.
 * The first line of each file is considered as being the title, and the rest is considered as content. Content will be markdown-formatted.
 
 In the file, the first line will be considered as being the title, and the rest will be the content. By default, the content is markdown-formatted.
@@ -113,5 +113,5 @@ v.1.0
 
 * Scroll autoload
 * URL rewriting for pages and posts
-* Full post view
+* Excerpts and full post view
 * Add thumbnail upscaling to thumbnails.php

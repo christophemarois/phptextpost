@@ -2,44 +2,31 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>PHPTextPost Example page</title>
-	<meta charset="utf-8" />
-	
-	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
-	<link href="css/style.css" rel="stylesheet" />
-	
-	<style type="text/css">
-	  #logo {
-	    margin: 20px 0;
-	    text-align: center;
-	  }
-	  #logo a {
-	    font: 38px/68px 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0;
-      display: block;
-      margin: 0 auto;
-      border-bottom: 1px solid #222;
-      padding-bottom: 10px;
-      text-decoration: none;
-      color: #000;
-	  }
-    #logo a:hover {
-      text-decoration: none;
+  <title>PHPTextPost Example page</title>
+  <meta charset="utf-8" />
+
+  <?php
+    $stylesPaths = array('public/css/vendor/', 'public/css/application/');
+
+    // Glob stylesPaths elements for css, sass anc scss files
+    $stylesheets = array();
+    foreach ( $stylesPaths as $stylesPath ) {
+
+      $files = glob($stylesPath . '*.{css}', GLOB_BRACE);
+      $stylesheets = array_merge($stylesheets, $files);
+
     }
-	  #description {
-	    margin-bottom: 20px;
-      text-align: center;
-      font-style: italic;
-	  }
-	  #description p {
-	    font-size: 12px
-	  }
-	</style>
-	
+
+    // Link every found stylesheet
+    foreach ( $stylesheets as $stylesheet ) {
+      echo('<link href="' . $stylesheet . '" rel="stylesheet" />'); echo("\n");
+    }
+  ?>
+
 </head>
 
 <body>
-  
+
   <div class="container">
     <div class="row">
       <div class="span6 offset3">
@@ -54,13 +41,13 @@
           <p>You can modify this example page to fit your needs, or even create a whole new one if you need to. Follow the readme!</p>
         </div>
         <?php
-        include('phptextpost/parser.php'); // That's it!
+          include('./application/parser.php');
         ?>
       </div>
     </div>
   </div>
-  
+
   <script type="text/javascript" src="js/bootstrap.min.js" />
-  
+
 </body>
 </html>
