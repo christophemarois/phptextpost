@@ -57,11 +57,7 @@
               <h3><?= $post['title'] ?></h3>
 
               <div class="info">
-                <?=
-                  $post['posted_on'] . " " .
-                  $lang['by'] . " " .
-                  $post['author']
-                ?>
+                <?= $post['posted_on'] . " " . $lang['by'] . " " . $post['author'] ?>
               </div>
             </div>
 
