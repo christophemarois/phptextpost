@@ -16,9 +16,9 @@ $sizeinfo = array(
   'large'   => array(500,500),
   'full'    => array(770,770)
 );
+$customsizes = false;                               // When set to true, enables non-preset sizes such as 200x300
 
-$phpoverride = false;                               // If set to true, the script will try to override php's memory and time limitations.
-                                                    // Only try this if you have problems running your script on large images
+$phpoverride = true;                                // If set to true, the script will try to override php's memory and time limitations.
 
 /* Do not edit now */
 
@@ -64,6 +64,8 @@ if( !isset($_GET['size']) || empty($_GET['size']) ||
     !isset($_GET['filename']) || empty($_GET['filename']) )
   die('You must specify a filename and a size');
 
+$size = $_GET['size'];
+
 $file = pathinfo($_GET['filename']);
 $originalpath = $originaldir.'/'.$file['basename'];
 
@@ -71,12 +73,23 @@ if(!file_exists($originaldir.'/'.$file['basename']))
   die('The required file does not exist');
 if(!in_array($file['extension'], $allowed_types))
   die('The provided file type is not supported');
-if(!array_key_exists($_GET['size'], $sizeinfo))
+
+// Determine desired width and desired height
+if ( array_key_exists($size, $sizeinfo) ) {
+
+  $finalsize['width'] = $sizeinfo[$size][0];
+  $finalsize['height'] = $sizeinfo[$size][1];
+
+} else if (preg_match('/^([0-9]+)x([0-9]+)$/', $size, $preg_sizes) && $customsizes) {
+
+  $finalsize['width'] = $preg_sizes[1];
+  $finalsize['height'] = $preg_sizes[2];
+
+} else {
+
   die('The specified size is invalid');
 
-$size = $_GET['size'];
-$finalsize['width'] = $sizeinfo[$size][0];
-$finalsize['height'] = $sizeinfo[$size][1];
+}
 
 $thumbpath = $thumbdir.'/'.$file['filename'].'-'.$size.'.jpg';
 $imagesize = getimagesize($originalpath);
@@ -89,7 +102,7 @@ if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'
 
     if($phpoverride){
       @set_time_limit (0);
-      @ini_set("memory_limit","32M");
+      @ini_set("memory_limit","64M");
     }
 
     ob_start(); // Start buffer to prevent header problems when showing
