@@ -47,37 +47,35 @@
           </p>
         </div>
 
-        <?php pagenav(); ?>
+        <?php pagenav(); // Navigation ?>
 
         <!-- Begin loop -->
         <?php foreach( $page_posts as $post ) { ?>
 
           <div class="news clearfix">
             <div class="header">
-              <h3><?php echo($post['title']); ?></h3>
+              <h3><?= $post['title'] ?></h3>
 
               <div class="info">
-                <?php echo(
+                <?=
                   $post['posted_on'] . " " .
                   $lang['by'] . " " .
                   $post['author']
-                ); ?>
+                ?>
               </div>
             </div>
 
-            <?php echo($post['content']); ?>
+            <?= $post['content'] ?>
           </div>
 
         <?php } ?>
         <!-- End loop -->
 
         <?php if( count($page_posts) == 0 ) { ?>
-          <?php echo($lang['no_posts']); ?>
+          <?= $lang['no_posts'] ?>
         <?php } ?>
 
-        <!-- End loop -->
-
-        <?php pagenav(); ?>
+        <?php pagenav(); // Navigation ?>
 
       </div>
     </div>
