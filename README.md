@@ -1,18 +1,19 @@
-# PHPTextPost 1.2.1
+# phpTextPost 1.3
 ### Description
 
-PHPTextPost is a lightweight, file-based and highly customizable news system that can also act as a blogroll. It features:
-
-* Automatic thumbnail system
-* Markdown formating
-* Page listing or optional scroll auto-loading
-* Permalinks for pages and posts
+**phpTextPost** is a lightweight, database-less blogging system with pagination and markdown formatting, that is super easy to install, integrate and customize. It also features automatic thumnailing and built-in pagination.
 
 ### Requirements
 
-PHP > 5 and GD 2.0+
+PHP > 5 and GD 2.0+.
 
-### Installation
+### Configuration
+
+There are several variables that can be changed in order to customize phpTextPost in `application/config.php`.
+
+### Customization and integration
+
+
 
 For an new installation (not using the provided template), include `parser.php` in a file contained in the same directory that holds `files/`, `images/` and `phptextpost/`.
 
@@ -28,9 +29,7 @@ You may have to specify your script directory in the .htaccess for the url rewri
 
 	RewriteBase /news/
 
-### Configuration
 
-There are several variables that can be changed in order to customize PHPTextPost in `parser.php` or `thumbnails.php`.
 
 ### Adding posts
 
@@ -39,7 +38,7 @@ There are several variables that can be changed in order to customize PHPTextPos
 * The first line of each file is considered as being the title, and the rest is considered as content. Content will be markdown-formatted.
 
 In the file, the first line will be considered as being the title, and the rest will be the content. By default, the content is markdown-formatted.
-	  
+
 ### Adding images
 
 PHPTextPost features an automatic thumbnail generating feature. To use it, you must put your original images in the `images/` directory, then embed an image which source os: `thumbs/[filename.ext]?[size]`, where **filename.ext** is the original filename and **size** the desired thumbnail size.
@@ -108,7 +107,7 @@ v.1.1
 v.1.0
 
 	Initial release
-	
+
 ### To-do list
 
 * Scroll autoload
