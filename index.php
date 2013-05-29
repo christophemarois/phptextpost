@@ -50,8 +50,7 @@
         <?php pagenav(); ?>
 
         <!-- Begin loop -->
-        <?php for($i=0; $i < $posts_on_page; $i++) {
-          $post = $posts[ $first_post - 1 + $i ]; ?>
+        <?php foreach( $page_posts as $post ) { ?>
 
           <div class="news clearfix">
             <div class="header">
@@ -72,7 +71,7 @@
         <?php } ?>
         <!-- End loop -->
 
-        <?php if( $posts_on_page == 0 ) { ?>
+        <?php if( count($page_posts) == 0 ) { ?>
           <?php echo($lang['no_posts']); ?>
         <?php } ?>
 

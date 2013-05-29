@@ -57,6 +57,9 @@ array_reverse($posts);
 $currentpage = isset($_GET['p']) && is_numeric($_GET['p']) ?
   $_GET['p'] : 1;
 
+// Total number of pages, 1-indexed.
+$totalpagenumber = ceil( count($posts) / $pagination );
+
 // Get page's first post
 $first_post = ($currentpage - 1) * $pagination + 1;
 
@@ -68,7 +71,11 @@ $last_post = $currentpage * $pagination < count($posts) ?
   count($posts);
 
 // Number of posts on page, 1-indexed.
-$posts_on_page = $last_post - ($currentpage - 1) * $pagination;
+$how_many_posts_on_page = $last_post - ($currentpage - 1) * $pagination;
 
-// Total number of pages, 1-indexed.
-$totalpagenumber = ceil( count($posts) / $pagination );
+// Populate $page_posts with only the displayed posts.
+// This is the only variable that will be used for the loop.
+$page_posts = array();
+for($i=0; $i < $how_many_posts_on_page; $i++) {
+  $page_posts[] = $posts[ $first_post - 1 + $i ];
+}
