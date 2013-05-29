@@ -11,9 +11,8 @@ if( preg_match("/".basename(__FILE__) . "/i", $_SERVER['REQUEST_URI']) )
 // List all files of the specified extension
 $files = glob($directory . "*." . $ext);  // List all files in directory
 
-// Default message if there are no files
-if(count($files) == 0)
-  die($lang['no_posts']);
+// Initialize $posts array
+$posts = array();
 
 // Parse files
 foreach($files as $i => $file) {
@@ -22,18 +21,26 @@ foreach($files as $i => $file) {
   $content = file_get_contents($file);
 
   // Get the JSON object
-  $lines = preg_split("/((\r?\n)|(\n?\r))/", $content); // Get first line
-  preg_match('/{.*}/', $lines[0], $json_match); // Remove enclosing HTML comments
-  $json = json_decode($json_match[0], true); // Decode string into associative array
+  preg_match('/^<!--(.*)-->/s', $content, $json_match);
+
+  // If there is no JSON object, skip file
+  if(!isset($json_match[1])) { continue; }
+
+  // Decode string into associative array
+  $json = json_decode($json_match[1], true);
+
+  // If required fields do not exist, skip file
+  if( !isset($json['title']) ||
+      !isset($json['date'])) { continue; }
 
   // Markdown the entire content, as the JSON object
   // is in HTML comments anyways
   $posts[$i]['content'] = Markdown($content);
 
-  // Get the JSON attributes
+  // Parse JSON attributes
   $posts[$i]['title']       = $json['title'];
   $posts[$i]['date']        = $json['date'];
-  $posts[$i]['posted_on']  = strftime($lang['dateformat'], strtotime($json['date']));
+  $posts[$i]['posted_on']   = strftime($lang['dateformat'], strtotime($json['date']));
   $posts[$i]['author'] = isset($json['author']) ?
     $json['author'] :
     $lang['unknown_author'] ;
@@ -47,36 +54,21 @@ usort($posts, 'datesort');
 array_reverse($posts);
 
 // Get the current page
-if(isset($_GET['p']) && !empty($_GET['p']) && is_numeric($_GET['p'])){
-  $currentpage = $_GET['p'];
-}else{
-  $currentpage = 1;
-}
+$currentpage = isset($_GET['p']) && is_numeric($_GET['p']) ?
+  $_GET['p'] : 1;
 
-// Get page's posts
+// Get page's first post
 $first_post = ($currentpage - 1) * $pagination + 1;
 
-// Does the first post exist?
-if( isset($posts[$first_post-1]) ) {
-
-  // Is there enough posts to populate a next page?
-  $last_post = $currentpage*$pagination < count($posts) ?
-    // Then stop at the end of the page
-    $currentpage*$pagination :
-    // Otherwise, stop at the end of posts
-    count($posts);
-
-} else {
-
-  // Not enough posts to show page
-  die("Not enough posts to show page</body></html>");
-
-}
+// Is there enough posts to populate a next page?
+$last_post = $currentpage * $pagination < count($posts) ?
+  // Then stop at the end of the page
+  $currentpage * $pagination :
+  // Otherwise, stop at the end of posts
+  count($posts);
 
 // Number of posts on page, 1-indexed.
-$posts_on_page = $last_post - ($currentpage-1) * $pagination;
+$posts_on_page = $last_post - ($currentpage - 1) * $pagination;
 
-// Total number of pages
-$totalpagenumber = ceil(count($posts)/$pagination);
-
-?>
+// Total number of pages, 1-indexed.
+$totalpagenumber = ceil( count($posts) / $pagination );

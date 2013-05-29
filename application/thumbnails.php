@@ -116,5 +116,3 @@ if(($imagesize[0] > $finalsize['width']) || ($imagesize[1] > $finalsize['height'
   output_image($originalpath); // Show the original
 
 }
-
-?>

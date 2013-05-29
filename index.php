@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>PHPTextPost</title>
+  <title>phpTextPost</title>
   <meta charset="utf-8" />
 
   <?php
@@ -42,17 +42,15 @@
       <div class="span8 offset2">
         <div id="description">
           <p>
-            You can modify this page to fit your needs, or integrate the script into an existing one.<br />
-            Follow the readme!
+            You can modify this page to fit your needs, or integrate phpTextPost into an existing system.<br />
+            Follow the README!
           </p>
         </div>
 
         <?php pagenav(); ?>
 
         <!-- Begin loop -->
-
-        <?php
-        for($i=0; $i < $posts_on_page; $i++) {
+        <?php for($i=0; $i < $posts_on_page; $i++) {
           $post = $posts[ $first_post - 1 + $i ]; ?>
 
           <div class="news clearfix">
@@ -71,6 +69,11 @@
             <?php echo($post['content']); ?>
           </div>
 
+        <?php } ?>
+        <!-- End loop -->
+
+        <?php if( $posts_on_page == 0 ) { ?>
+          <?php echo($lang['no_posts']); ?>
         <?php } ?>
 
         <!-- End loop -->
