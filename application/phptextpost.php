@@ -1,6 +1,6 @@
 <?php
 
-require_once('config.php');
+require_once('config.inc.php');
 require_once('functions.php');
 require_once('vendor/markdownextra.1.2.5.php');
 
