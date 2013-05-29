@@ -1,4 +1,4 @@
-<!-- { "title": "Bonjour", "date": "2012-01-01 00.00.00", "authodr": "Christophe Marois" } -->
+<!-- { "title": "Bonjour", "date": "2012-01-01 00.00.00", "author": "Christophe Marois" } -->
 
 Read the **README** to understand how to make your own posts. When you're ready, delete this one!
 
