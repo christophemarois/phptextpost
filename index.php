@@ -1,8 +1,10 @@
+<?php include('./application/phptextpost.php'); ?>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>PHPTextPost Example page</title>
+  <title>PHPTextPost</title>
   <meta charset="utf-8" />
 
   <?php
@@ -31,23 +33,54 @@
     <div class="row">
       <div class="span6 offset3">
         <div id="logo">
-          <a href="./">PHPTextPost Example page</a>
+          <a href="./">phpTextPost</a>
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="span8 offset2">
         <div id="description">
-          <p>You can modify this example page to fit your needs, or even create a whole new one if you need to. Follow the readme!</p>
+          <p>
+            You can modify this page to fit your needs, or integrate the script into an existing one.<br />
+            Follow the readme!
+          </p>
         </div>
+
+        <?php pagenav(); ?>
+
+        <!-- Begin loop -->
+
         <?php
-          include('./application/parser.php');
-        ?>
+        for($i=0; $i < $posts_on_page; $i++) {
+          $post = $posts[ $first_post - 1 + $i ]; ?>
+
+          <div class="news clearfix">
+            <div class="header">
+              <h3><?php echo($post['title']); ?></h3>
+
+              <div class="info">
+                <?php echo(
+                  $post['posted_on'] . " " .
+                  $lang['by'] . " " .
+                  $post['author']
+                ); ?>
+              </div>
+            </div>
+
+            <?php echo($post['content']); ?>
+          </div>
+
+        <?php } ?>
+
+        <!-- End loop -->
+
+        <?php pagenav(); ?>
+
       </div>
     </div>
   </div>
 
   <script type="text/javascript" src="js/bootstrap.min.js" />
-
 </body>
 </html>

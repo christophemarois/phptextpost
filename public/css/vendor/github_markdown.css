@@ -158,7 +158,7 @@ html[xmlns] .clearfix {
     color: purple;
   }
 
-.last-news {
+.news:last-child {
   margin-bottom: 0px !important;
   border-bottom: none !important;
 }
@@ -187,8 +187,4 @@ a > img[alt="imgleft"], p > img[alt="imgleft"], .imgleft {
 a > img[alt="imgright"], p > img[alt="imgright"], .imgright {
   margin: 0 0 5px 20px;
   float: right;
-}
-
-.pagelist {
-text-align: right;
 }

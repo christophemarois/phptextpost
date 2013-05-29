@@ -22,3 +22,7 @@
 #description p {
   font-size: 12px
 }
+
+.pagenav {
+text-align: right;
+}
